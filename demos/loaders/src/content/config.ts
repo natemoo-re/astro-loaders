@@ -1,9 +1,10 @@
 import { defineCollection, z } from "astro:content";
-import { feedLoader } from "@ascorbic/feed-loader";
-import { csvLoader } from "@ascorbic/csv-loader";
 import { airtableLoader } from "@ascorbic/airtable-loader";
-import { mockLoader } from "@ascorbic/mock-loader";
 import { authorFeedLoader } from "@ascorbic/bluesky-loader";
+import { csvLoader } from "@ascorbic/csv-loader";
+import { feedLoader } from "@ascorbic/feed-loader";
+import { githubLoader } from "@ascorbic/github-loader";
+import { mockLoader } from "@ascorbic/mock-loader";
 const releases = defineCollection({
   loader: feedLoader({
     url: "https://github.com/withastro/astro/releases.atom",
@@ -73,6 +74,14 @@ const bluesky = defineCollection({
   }),
 });
 
+const docs = defineCollection({
+  loader: githubLoader({
+    owner: 'withastro',
+    repo: 'docs',
+    directory: 'src/content/docs/en',
+  })
+})
+
 export const collections = {
   releases,
   podcasts,
@@ -81,4 +90,5 @@ export const collections = {
   mockBlog,
   mockOrders,
   bluesky,
+  docs
 };
